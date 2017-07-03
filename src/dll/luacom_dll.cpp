@@ -165,10 +165,12 @@ static lua_State* luacom_DoRegistryFile(const char* luaclsid) {
 }
 
 static tLuaCOMClassFactory* luacom_GetInprocFactory(REFCLSID rclsid) {
-  BSTR clsid;
+  LPOLESTR clsid;
   try {
     CHK_COM_CODE(StringFromCLSID(rclsid, &clsid));
-    tStringBuffer luaclsid = tUtil::bstr2string(clsid);
+    BSTR clsid_bstr = SysAllocString(clsid);
+    tStringBuffer luaclsid = tUtil::bstr2string(clsid_bstr);
+    SysFreeString(clsid_bstr);
     CoTaskMemFree(clsid);
     tLuaCOMClassFactory* pFactory = factoryCache_GetFactory(luaclsid);
     if(pFactory == NULL) {
