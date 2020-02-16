@@ -127,8 +127,8 @@ void tLuaCOMTypeHandler::com2lua(lua_State* L, VARIANTARG varg_orig, bool is_var
   VARIANT varg;
   VariantInit(&varg);
 
-  lua_getglobal(L,"luacom");
-  lua_pushstring(L,"TableVariants");
+  lua_getglobal(L, "luacom");
+  lua_pushstring(L, "TableVariants");
   lua_gettable(L, -2);
   bool table_variants = lua_toboolean(L, -1) != 0;
   lua_pop(L, 2);
@@ -136,18 +136,19 @@ void tLuaCOMTypeHandler::com2lua(lua_State* L, VARIANTARG varg_orig, bool is_var
 
   // dereferences VARIANTARG (if necessary)
   hr = VariantCopyInd(&varg, &varg_orig);
-  if(FAILED(hr))
+  if (FAILED(hr))
     COM_ERROR(tUtil::GetErrorMessage(hr));
 
   // Gives a different treatment to SAFEARRAYs
-  if(varg.vt & VT_ARRAY)
+  if (varg.vt & VT_ARRAY)
   {
     // treats an array of VT_UI1 as an array of char and
     // converts it to a string
-    if(varg.vt == (VT_ARRAY | VT_UI1))
+    if (varg.vt == (VT_ARRAY | VT_UI1))
       safearray2string(L, varg);
     else
       safearray_com2lua(L, varg);
+    VariantClear(&varg);
   }
   else
   {
@@ -1359,10 +1360,18 @@ stkIndex tLuaCOMTypeHandler::get_from_array(lua_State* L,
 
   HRESULT hr = SafeArrayGetElement(safearray, indices, pv);
 
-  if(FAILED(hr))
+  if(FAILED(hr)) {
+    if (vt != VT_VARIANT) {
+      VariantClear(&varg);
+    }
     LUACOM_EXCEPTION(INTERNAL_ERROR);
+  }
 
   com2lua(L, varg);
+
+  if (vt != VT_VARIANT) {
+    VariantClear(&varg);
+  }
 
   return lua_gettop(L);
 }
