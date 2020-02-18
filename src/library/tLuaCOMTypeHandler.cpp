@@ -1664,7 +1664,13 @@ void tLuaCOMTypeHandler::safearray_com2lua(lua_State* L, VARIANTARG & varg)
       indices[i] = bounds[i].lLbound;
 
     // gets array data type
-    VARTYPE vt = varg.vt & ~VT_ARRAY;
+    VARTYPE vt;
+    HRESULT hr = SafeArrayGetVartype(safearray, &vt);
+    if (FAILED(hr)) {
+      delete[] bounds;
+      delete[] indices;
+      LUACOM_EXCEPTION(INTERNAL_ERROR);
+    }
 
     // holds index to Lua objects
     stkIndex luaval = 0;
