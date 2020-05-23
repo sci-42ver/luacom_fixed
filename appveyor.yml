@@ -23,3 +23,7 @@ build_script:
 
 test_script:
   - lua -lluacom -v -e"print{}"
+
+artifacts:
+  - path: bin/luacom.dll
+    name: luacom
