@@ -47,6 +47,7 @@ SRC_DLL_DIR = .\src\dll
 # ---------------------------------------------------------------------------
 !IFDEF X86
 CC = D:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\bin\Hostx64\x86\cl
+!MESSAGE "Use X86"
 CFLAGS=$(CFLAGS) /machine:x86	
 X86_suffix= _x86
 !ELSE

@@ -1,4 +1,4 @@
-package = "LuaCOM"
+package = "LuaCOM_x86"
 version = "dev.unknown-1"
 source = {
   url = "https://github.com/sci-42ver/luacom_fixed/archive/refs/heads/x86.zip"
