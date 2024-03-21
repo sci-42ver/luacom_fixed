@@ -141,7 +141,6 @@ $(BIN_DIR)::
 
 install: $(LC_DLL)
 	if not exist "$(LUA_LIBDIR)" mkdir -p "$(LUA_LIBDIR)"
-	!MESSAGE "$(LUA_LIBDIR): " $(LUA_LIBDIR)
 	copy $(BIN_DIR)\luacom.dll "$(LUA_LIBDIR)"
 
 clean-obj:
