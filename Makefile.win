@@ -29,6 +29,21 @@ LUA             = $(LUA_BINDIR)\$(LUA_INTERPRETER)
 LUAC            = $(LUA) mak\luac.lua
 BIN2C           = $(LUA) mak\bin2c.lua
 
+# !MESSAGE "env " $(PATH)
+# !MESSAGE "env " $(X86)
+
+# !MESSAGE "Checking X86"
+!IFDEF X86
+CC = "D:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\bin\Hostx64\x86\cl"
+# CFLAGS=$(CFLAGS) /machine:X86	
+X86_suffix= _x86
+# !MESSAGE "Use X86;" $(X86_suffix)
+!ELSE
+# !MESSAGE "Not use X86"
+CC = cl
+X86_suffix= 
+!ENDIF
+
 # ---------------------------------------------------------------------------
 # Local source directories.
 # ---------------------------------------------------------------------------
@@ -45,22 +60,13 @@ SRC_DLL_DIR = .\src\dll
 # ---------------------------------------------------------------------------
 # Compiler options
 # ---------------------------------------------------------------------------
-!IFDEF X86
-CC = D:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\bin\Hostx64\x86\cl
-!MESSAGE "Use X86"
-CFLAGS=$(CFLAGS) /machine:x86	
-X86_suffix= _x86
-!ELSE
-!MESSAGE "Not use X86"
-CC = cl
-X86_suffix= 
-!ENDIF
 
 INCS = -I$(LUA_INCDIR) -I$(INC_DIR) -I$(SRC_LIB_DIR)
 
 CFLAGS = $(CFLAGS) /DWIN32 /D_CRT_SECURE_NO_DEPRECATE -nologo
 # If you want debugging information, define DEBUG in your environment
 !IFDEF DEBUG
+# !MESSAGE "Use DEBUG"
 CFLAGS =$(CFLAGS) -MDd -Zi -Od /DLUA_USE_APICHECK
 !ELSE
 CFLAGS =$(CFLAGS) -MD -Zi -O2 /DNDEBUG

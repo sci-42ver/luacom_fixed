@@ -4,7 +4,8 @@ build/
 *.lo
 *.pdb
 bin/
-lib/
-obj/
+lib*/
+obj*/
 *.loh
 *.bk
+NONE

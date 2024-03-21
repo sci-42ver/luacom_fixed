@@ -18,7 +18,6 @@ build = {
       win32 = {
          type = "make",
          build_variables = {
-	    MAKE = "nmake /D 'X86' /D 'DEBUG'",		
             CFLAGS     = "$(CFLAGS)",
             LIBFLAG    = "$(LIBFLAG)",
             LUA_LIBDIR = "$(LUA_LIBDIR)",
