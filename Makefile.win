@@ -13,13 +13,15 @@ LUACOM_VERSION=1.4
 # ---------------------------------------------------------------------------
 
 # suffix for binaries (e.g. 5.1 => lua5.1.exe)
-LUA_SUFFIX      = 5.1
-LUA_BASE_DIR    = ..\lua$(LUA_SUFFIX)
+LUA_SUFFIX      = 54
+# LUA_SUFFIX      = 5.1
+LUA_BASE_DIR    = D:\lua-5.4.2_Win64_bin
 LUA_INTERPRETER = lua$(LUA_SUFFIX).exe
 
 #this variables set by rockspec
+# preferred to w.r.t. dll https://github.com/luarocks/luarocks/blob/8b0c14ce2dda811629a62dc30f3651057c7ec0f3/CHANGELOG.md?plain=1#L351
 LUALIB          = lua$(LUA_SUFFIX).lib
-LUA_LIBDIR      = $(LUA_BASE_DIR)\lib
+LUA_LIBDIR      = $(LUA_BASE_DIR)\lib_64
 LUA_BINDIR      = $(LUA_BASE_DIR)\bin
 LUA_INCDIR      = $(LUA_BASE_DIR)\include
 LUA             = $(LUA_BINDIR)\$(LUA_INTERPRETER)

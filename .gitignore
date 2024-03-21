@@ -1,0 +1,10 @@
+build/
+*.swp
+*.rock
+*.lo
+*.pdb
+bin/
+lib/
+obj/
+*.loh
+*.bk
