@@ -33,10 +33,10 @@ BIN2C           = $(LUA) mak\bin2c.lua
 # Local source directories.
 # ---------------------------------------------------------------------------
 INC_DIR = .\include
-LIB_DIR = .\lib
-OBJ_ROOTDIR = .\obj
+LIB_DIR = .\lib$(X86_suffix)
+OBJ_ROOTDIR = .\obj$(X86_suffix)
 OBJ_DIR = $(OBJ_ROOTDIR)\lua$(LUA_SUFFIX)
-BIN_DIR = .\bin
+BIN_DIR = .\bin$(X86_suffix)
 DLL_DIR = .\dll
 SRC_LIB_DIR = .\src\library
 SRC_BIN_DIR = .\src\bin
@@ -48,8 +48,10 @@ SRC_DLL_DIR = .\src\dll
 !IFDEF X86
 CC = D:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\bin\Hostx64\x86\cl
 CFLAGS=$(CFLAGS) /machine:x86	
+X86_suffix= _x86
 !ELSE
 CC = cl
+X86_suffix= 
 !ENDIF
 
 INCS = -I$(LUA_INCDIR) -I$(INC_DIR) -I$(SRC_LIB_DIR)

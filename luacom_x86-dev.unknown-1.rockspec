@@ -1,7 +1,7 @@
 package = "LuaCOM"
 version = "dev.unknown-1"
 source = {
-  url = "https://github.com/sci-42ver/luacom_fixed/archive/master.zip"
+  url = "https://github.com/sci-42ver/luacom_fixed/archive/refs/heads/x86.zip"
 }
 description = {
    summary = "Use COM libraries from Lua",
