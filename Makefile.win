@@ -45,11 +45,16 @@ SRC_DLL_DIR = .\src\dll
 # ---------------------------------------------------------------------------
 # Compiler options
 # ---------------------------------------------------------------------------
+!IFDEF X86
+CC = D:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\bin\Hostx64\x86\cl
+CFLAGS=$(CFLAGS) /machine:x86	
+!ELSE
 CC = cl
+!ENDIF
 
 INCS = -I$(LUA_INCDIR) -I$(INC_DIR) -I$(SRC_LIB_DIR)
 
-CFLAGS = -DWIN32 -D_CRT_SECURE_NO_DEPRECATE -nologo
+CFLAGS = $(CFLAGS) -DWIN32 -D_CRT_SECURE_NO_DEPRECATE -nologo
 # If you want debugging information, define DEBUG in your environment
 !IFDEF DEBUG
 CFLAGS =$(CFLAGS) -MDd -Zi -Od -DLUA_USE_APICHECK
@@ -126,6 +131,7 @@ $(BIN_DIR)::
 
 install: $(LC_DLL)
 	if not exist "$(LUA_LIBDIR)" mkdir -p "$(LUA_LIBDIR)"
+	!MESSAGE "$(LUA_LIBDIR): " $(LUA_LIBDIR)
 	copy $(BIN_DIR)\luacom.dll "$(LUA_LIBDIR)"
 
 clean-obj:
