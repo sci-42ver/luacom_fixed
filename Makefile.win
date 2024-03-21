@@ -51,6 +51,7 @@ CC = D:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39
 CFLAGS=$(CFLAGS) /machine:x86	
 X86_suffix= _x86
 !ELSE
+!MESSAGE "Not use X86"
 CC = cl
 X86_suffix= 
 !ENDIF
