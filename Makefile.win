@@ -12,16 +12,37 @@ LUACOM_VERSION=1.4
 # You may need to modify these.
 # ---------------------------------------------------------------------------
 
-# suffix for binaries (e.g. 5.1 => lua5.1.exe)
 LUA_SUFFIX      = 54
-# LUA_SUFFIX      = 5.1
 LUA_BASE_DIR    = D:\lua-5.4.2_Win64_bin
+
+# !MESSAGE "Checking X86"
+!IFDEF X86
+CC = "D:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\bin\Hostx64\x86\cl"
+Arch= 32
+# !MESSAGE "Use X86;" _x$(Arch)
+!ELSE
+# !MESSAGE "Not use X86"
+CC = cl
+Arch= 64
+!ENDIF
+
+# suffix for binaries (e.g. 5.1 => lua5.1.exe)
+# Here is to make 'nmake /E' without luarocks can also work
+!IFDEF LUA_DETAILED_SUFFIX
+LUA_BASE_DIR=D:\lua-$(LUA_DETAILED_SUFFIX)_Win$(Arch)_bin
+!MESSAGE $(LUA_DETAILED_SUFFIX)
+!ENDIF
+# Since nmake doesn't support bash https://stackoverflow.com/a/28837372/21294350 so regex may be not trivial https://stackoverflow.com/a/49883535/21294350
+!IFDEF LUA_SUFFIX
+!MESSAGE $(LUA_SUFFIX)
+LUA_SUFFIX    = $(LUA_SUFFIX)
+!ENDIF
 LUA_INTERPRETER = lua$(LUA_SUFFIX).exe
 
 #this variables set by rockspec
 # preferred to w.r.t. dll https://github.com/luarocks/luarocks/blob/8b0c14ce2dda811629a62dc30f3651057c7ec0f3/CHANGELOG.md?plain=1#L351
 LUALIB          = lua$(LUA_SUFFIX).lib
-LUA_LIBDIR      = $(LUA_BASE_DIR)\lib_64
+LUA_LIBDIR      = $(LUA_BASE_DIR)\lib
 LUA_BINDIR      = $(LUA_BASE_DIR)\bin
 LUA_INCDIR      = $(LUA_BASE_DIR)\include
 LUA             = $(LUA_BINDIR)\$(LUA_INTERPRETER)
@@ -32,26 +53,15 @@ BIN2C           = $(LUA) mak\bin2c.lua
 # !MESSAGE "env " $(PATH)
 # !MESSAGE "env " $(X86)
 
-# !MESSAGE "Checking X86"
-!IFDEF X86
-CC = "D:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\bin\Hostx64\x86\cl"
-# CFLAGS=$(CFLAGS) /machine:X86	
-X86_suffix= _x86
-# !MESSAGE "Use X86;" $(X86_suffix)
-!ELSE
-# !MESSAGE "Not use X86"
-CC = cl
-X86_suffix= 
-!ENDIF
 
 # ---------------------------------------------------------------------------
 # Local source directories.
 # ---------------------------------------------------------------------------
 INC_DIR = .\include
-LIB_DIR = .\lib$(X86_suffix)
-OBJ_ROOTDIR = .\obj$(X86_suffix)
+LIB_DIR = .\lib_x$(Arch)
+OBJ_ROOTDIR = .\obj_x$(Arch)
 OBJ_DIR = $(OBJ_ROOTDIR)\lua$(LUA_SUFFIX)
-BIN_DIR = .\bin$(X86_suffix)
+BIN_DIR = .\bin_x$(Arch)
 DLL_DIR = .\dll
 SRC_LIB_DIR = .\src\library
 SRC_BIN_DIR = .\src\bin
