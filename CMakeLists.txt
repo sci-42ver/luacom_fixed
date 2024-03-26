@@ -6,6 +6,10 @@
 
 project ( luacom C CXX )
 cmake_minimum_required ( VERSION 2.8 )
+
+#set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -m32 -march=i686")
+#set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -m32 --enable-stdcall-fixup")
+
 include ( cmake/dist.cmake )
 include ( lua )
 include ( CheckCSourceCompiles )
@@ -69,6 +73,9 @@ set_source_files_properties ( src/library/luacom.cpp PROPERTIES OBJECT_DEPENDS $
 
 set ( SRC_DLL src/dll/luacom_dll.cpp )
 add_definitions ( -DLUACOM_DLL="luacom.dll" )
+
+add_compile_options(-m32 -march=i686)
+add_link_options(-m32 -Wl,--enable-stdcall-fixup)
 
 install_lua_module ( luacom ${SRC_DLL} ${SRC_LIB} src/dll/luacom_dll.def LINK ${LIBS} )
 install_data ( README COPYRIGHT announce.txt todo.txt )
