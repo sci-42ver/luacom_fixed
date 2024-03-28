@@ -105,6 +105,7 @@ macro ( _lua_module_helper is_install _name )
     _append_path ( "${CMAKE_CURRENT_SOURCE_DIR}" "${_first_source}" _module_path )
     list ( APPEND _lua_modules "${_name}" "${_module_path}" )
 
+    message(INSTALL_LMOD ${INSTALL_LMOD})
     if ( ${is_install} )
       install ( FILES ${_first_source} DESTINATION ${INSTALL_LMOD}/${_module_dir}
                 RENAME ${_module_filename} 
@@ -129,6 +130,8 @@ macro ( _lua_module_helper is_install _name )
     target_link_libraries ( ${_target} ${LUA_LIBRARY} ${_MODULE_LINK} )
     set_target_properties ( ${_target} PROPERTIES LIBRARY_OUTPUT_DIRECTORY
                 "${_module_dir}" PREFIX "" OUTPUT_NAME "${_module_filenamebase}" )
+    set(debug_list ${is_install} ${_target} ${INSTALL_LMOD} ${_module_dir} ${INSTALL_CMOD}/${_module_dir})
+    message(INSTALL_LMOD " ${debug_list}")
     if ( ${is_install} )
       install ( TARGETS ${_target} DESTINATION ${INSTALL_CMOD}/${_module_dir} COMPONENT Runtime)
     endif ()
@@ -274,11 +277,12 @@ function ( add_lua_bin2c _target _source )
     endif ()
   endif ( HAVE_LUA_DUMP )
   message ( "-- bin2c=${BIN2C}" )
-  message ( "-- luac=${LUAC}" )
+  message ( "-- luac=${LUAC}" ${LUAC})
 
   get_filename_component ( SOURCEABS ${_source} ABSOLUTE )
   if ( HAVE_LUA_DUMP )
     get_filename_component ( SOURCEBASE ${_source} NAME_WE )
+    message ( "!! ${_target}|${_source}|${CMAKE_CURRENT_BINARY_DIR}/${SOURCEBASE}.lo|${SOURCEABS}" )
     add_custom_command (
       OUTPUT  ${_target} DEPENDS ${_source}
       COMMAND ${LUAC} -o ${CMAKE_CURRENT_BINARY_DIR}/${SOURCEBASE}.lo

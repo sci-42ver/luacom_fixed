@@ -76,6 +76,7 @@ add_definitions ( -DLUACOM_DLL="luacom.dll" )
 
 add_compile_options(-m32 -march=i686)
 add_link_options(-m32 -Wl,--enable-stdcall-fixup)
+message(CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}; ${GNUInstallDirs}")
 
 install_lua_module ( luacom ${SRC_DLL} ${SRC_LIB} src/dll/luacom_dll.def LINK ${LIBS} )
 install_data ( README COPYRIGHT announce.txt todo.txt )

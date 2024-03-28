@@ -13,7 +13,7 @@ LUACOM_VERSION=1.4
 # ---------------------------------------------------------------------------
 
 LUA_SUFFIX      = 54
-LUA_BASE_DIR    = D:\lua-5.4.2_Win64_bin
+LUA_BASE_DIR    = D:\lua-5.4.2
 
 # !MESSAGE "Checking X86"
 !IFDEF X86
@@ -29,7 +29,7 @@ Arch= 64
 # suffix for binaries (e.g. 5.1 => lua5.1.exe)
 # Here is to make 'nmake /E' without luarocks can also work
 !IFDEF LUA_DETAILED_SUFFIX
-LUA_BASE_DIR=D:\lua-$(LUA_DETAILED_SUFFIX)_Win$(Arch)_bin
+LUA_BASE_DIR=D:\lua-$(LUA_DETAILED_SUFFIX)
 !MESSAGE $(LUA_DETAILED_SUFFIX)
 !ENDIF
 # Since nmake doesn't support bash https://stackoverflow.com/a/28837372/21294350 so regex may be not trivial https://stackoverflow.com/a/49883535/21294350
@@ -41,6 +41,7 @@ LUA_INTERPRETER = lua$(LUA_SUFFIX).exe
 
 #this variables set by rockspec
 # preferred to w.r.t. dll https://github.com/luarocks/luarocks/blob/8b0c14ce2dda811629a62dc30f3651057c7ec0f3/CHANGELOG.md?plain=1#L351
+# this is just dll.a import lib http://lua-users.org/wiki/BuildingLua
 LUALIB          = lua$(LUA_SUFFIX).lib
 LUA_LIBDIR      = $(LUA_BASE_DIR)\lib
 LUA_BINDIR      = $(LUA_BASE_DIR)\bin
