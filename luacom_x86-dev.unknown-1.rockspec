@@ -1,12 +1,12 @@
 package = "LuaCOM_x86"
 version = "dev.unknown-1"
 source = {
-  url = "https://github.com/sci-42ver/luacom_fixed/archive/refs/heads/x86.zip"
+  url = "https://github.com/sci-42ver/luacom_fixed/archive/bf67f145d8a80ad30c4cf434d6816ad9a59471a9.zip"
 }
 description = {
    summary = "Use COM libraries from Lua",
    detailed = [[
-LuaCOM is an add-on library to the Lua language that allows Lua programs to use and implement objects that follow Microsoft's Component Object Model (COM) specification and use the ActiveX technology for property access and method calls.   ]],
+The fork of moteus's modified LuaCOM. In VsDevShell pwsh, run `$env:X86='yes';$env:DEBUG='yes';$env:LUA_DETAILED_SUFFIX=$Version;$env:LUA_SUFFIX=($env:LUA_DETAILED_SUFFIX -replace '(\d).(\d).*', '$1$2');$env:CFLAGS=" ";luarocks.bat install ...\luacom_x86-dev.unknown-1.rockspec` with `$MAKE='nmake /E'`. Tested with lua-5.4.2 directly using binary.]],
    license = "MIT/X11",
    homepage = "http://luaforge.net/projects/luacom/"
 }
